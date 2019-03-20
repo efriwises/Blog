@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Blogs</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Login-->
+    <string name="login_dummy">Login Dummy</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <!--end login-->
+
+    <!--Register-->
+    <string name="register_header">Registrasi User</string>
+    <string name="register">Registrasi</string>
+    <string name="nama">Nama User</string>
+    <string name="email_u">Email User</string>
+    <string name="pass_u">Password User</string>
+</resources>
