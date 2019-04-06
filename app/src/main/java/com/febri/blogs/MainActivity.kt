@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var fm : FragmentManager
+    lateinit var ft : FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        fm = supportFragmentManager
+        ft = fm.beginTransaction()
+        ft.replace(R.id.container, HomeFragment()).commit()
+
     }
 
     override fun onBackPressed() {
@@ -60,7 +67,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_camera -> {
-                // Handle the camera action
+                fm = supportFragmentManager
+                ft = fm.beginTransaction()
+                ft.replace(R.id.container, HomeFragment()).commit()
             }
             R.id.nav_gallery -> {
 
