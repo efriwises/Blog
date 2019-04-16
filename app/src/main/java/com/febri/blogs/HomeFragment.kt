@@ -1,36 +1,31 @@
 package com.febri.blogs
 
-import android.content.Context
+import android.app.ProgressDialog
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.febri.blogs.config.Config
 
-import com.febri.blogs.dummy.DummyContent
-import com.febri.blogs.dummy.DummyContent.DummyItem
+import com.febri.blogs.model.KategoriModel
+import com.febri.blogs.service.RequestHandler
+import kotlinx.android.synthetic.main.fragment_home.*
+import org.json.JSONObject
 
-/**
- * A fragment representing a list of Items.
- * Activities containing this fragment MUST implement the
- * [HomeFragment.OnListFragmentInteractionListener] interface.
- */
 class HomeFragment : Fragment() {
 
-    // TODO: Customize parameters
-    private var columnCount = 1
+    private var pd: ProgressDialog?=null
+    private var list:MutableList<KategoriModel>?=null
 
-    private var listener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
+        list= mutableListOf()
+        showData().execute()
     }
 
     override fun onCreateView(
@@ -38,62 +33,42 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = HomeAdapter(DummyContent.ITEMS, listener)
-            }
-        }
         return view
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
+    inner class showData : AsyncTask<String, Void, String>() {
+        override fun onPreExecute() {
+            super.onPreExecute()
+            pd= ProgressDialog.show(context,"","Wait",true,true)
+        }
+
+        override fun doInBackground(vararg params: String?): String {
+            val handler= RequestHandler()
+            val result=handler.sendGetRequest(Config.url_kategori)
+            return result
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            pd?.dismiss()
+            val objek= JSONObject(result)
+            if (objek.getInt("status")==1){
+                Toast.makeText(activity, "Tidak ada data!", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val array = objek.getJSONArray("data")
+                for (i in 0 until array.length()) {
+                    val data = array.getJSONObject(i)
+                    val model = KategoriModel()
+                    model.id_kategori = data.getString("id_kategori")
+                    model.kategori = data.getString("kategori")
+                    list?.add(model)
+                    val adapter = list?.let { HomeAdapter(it) }
+                    rc.layoutManager = LinearLayoutManager(activity)
+                    rc.adapter = adapter
+                }
+            }
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-    }
 }
