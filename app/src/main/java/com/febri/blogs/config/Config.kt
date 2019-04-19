@@ -9,11 +9,10 @@ object Config {
 
     val url_kategori = Host+"index.php/Webservice/kategori"
     val url_sub_kategori = Host+"index.php/Webservice/subkategori"
-    val url_content = Host+"index.php/Webservice/contentlist"
-    val url_detail_content = Host+"index.php/Webservice/contentdetails"
+    val url_sub_kategori_get = Host+"index.php/Webservice/subkategori_get/"
+    val url_content = Host+"index.php/Webservice/contentlist/"
+    val url_detail_content = Host+"index.php/Webservice/contentdetails/"
 
 
-    const val id="id_kategori"
-    const val id_sub="id_subkat"
-    const val id_content="id_content"
+    const val id="id"
 }

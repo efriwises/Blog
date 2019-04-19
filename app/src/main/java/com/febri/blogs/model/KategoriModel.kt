@@ -1,5 +1,6 @@
 package com.febri.blogs.model
 
+import java.io.Serializable
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -9,7 +10,7 @@ import java.util.HashMap
  *
  * TODO: Replace all uses of this class before publishing your app.
  */
-class KategoriModel {
+class KategoriModel:Serializable {
 
     var id_kategori : String?=null
     var kategori :String?=null
