@@ -50,7 +50,7 @@ class Detail : AppCompatActivity() {
                     val array = objek.getJSONArray("data")
                     for (i in 0 until array.length()) {
                         val data = array.getJSONObject(i)
-                        val cue = data.getString("judul");
+                        val cue = data.getString("video");
                         txt_judul.text = data.getString("judul")
                         txt_content.text = data.getString("description")
                         Glide.with(this@Detail)

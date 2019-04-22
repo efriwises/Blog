@@ -51,7 +51,7 @@
                     <ImageView
                             android:layout_width="150dp"
                             android:layout_height="150dp"
-                            android:src="@drawable/logo_youtube"
+                            android:src="@mipmap/ic_launcher"
                             android:id="@+id/video_content"
                             android:layout_gravity="center"
                     />
