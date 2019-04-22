@@ -1,11 +1,14 @@
 package com.febri.blogs
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import com.febri.blogs.config.Config
 
 import com.febri.blogs.model.ContentModel
 
@@ -29,6 +32,11 @@ class ContentListAdapter(
         val item = mValues[position]
         holder.mIdView.text = item.id_content
         holder.mContentView.text = item.judul
+        holder.mLayout?.setOnClickListener{
+            val intent= Intent(context, Detail::class.java)
+            intent.putExtra(Config.id,item.id_content)
+            context?.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = mValues.size
@@ -36,6 +44,7 @@ class ContentListAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIdView: TextView = mView.item_number
         val mContentView: TextView = mView.content
+        val mLayout: LinearLayout = mView.layout
 
         override fun toString(): String {
             return super.toString() + " '" + mContentView.text + "'"
