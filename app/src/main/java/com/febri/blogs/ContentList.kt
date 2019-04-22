@@ -45,6 +45,7 @@ class ContentList : AppCompatActivity() {
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
+            try {
             pd?.dismiss()
             val objek = JSONObject(result)
             if (objek.getInt("status") == 1) {
@@ -62,6 +63,9 @@ class ContentList : AppCompatActivity() {
                     rc.layoutManager = LinearLayoutManager(this@ContentList)
                     rc.adapter = adapter
                 }
+            }
+            } catch (e:Exception){
+                e.printStackTrace()
             }
         }
     }

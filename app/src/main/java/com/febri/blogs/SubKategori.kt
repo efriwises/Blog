@@ -50,6 +50,7 @@ class SubKategori : AppCompatActivity() {
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
+            try {
             pd?.dismiss()
             val objek= JSONObject(result)
             if (objek.getInt("status")==1){
@@ -68,6 +69,9 @@ class SubKategori : AppCompatActivity() {
                     rc.layoutManager = LinearLayoutManager(this@SubKategori)
                     rc.adapter = adapter
                 }
+            }
+            } catch (e:Exception){
+                e.printStackTrace()
             }
         }
     }

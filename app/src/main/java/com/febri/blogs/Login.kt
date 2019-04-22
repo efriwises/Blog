@@ -46,8 +46,10 @@ class Login : AppCompatActivity() {
 
         override fun onPostExecute(result: String?) {   //method Async result
             super.onPostExecute(result)
-            pd?.dismiss()
+
+
             try {
+                pd?.dismiss()
                 Log.d("result", result)
                 val objek = JSONObject(result)
                 if (objek.getInt("status") == 1) {

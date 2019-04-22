@@ -1,6 +1,8 @@
 package com.febri.blogs
 
 import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -23,6 +25,7 @@ class Detail : AppCompatActivity() {
 
         showData().execute()
 
+
     }
 
     inner class showData : AsyncTask<String, Void, String>() {
@@ -38,20 +41,30 @@ class Detail : AppCompatActivity() {
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            pd?.dismiss()
-            val objek = JSONObject(result)
-            if (objek.getInt("status") == 1) {
-                Toast.makeText(this@Detail, "Tidak ada data!", Toast.LENGTH_SHORT).show()
-            } else {
-                val array = objek.getJSONArray("data")
-                for (i in 0 until array.length()) {
-                    val data = array.getJSONObject(i)
-                    txt_judul.text = data.getString("judul")
-                    txt_content.text = data.getString("description")
-                    Glide.with(this@Detail)
-                        .load(Config.url_gambar + data.getString("gambar")).into(img_content)
-                }
+            try {
+                pd?.dismiss()
+                val objek = JSONObject(result)
+                if (objek.getInt("status") == 1) {
+                    Toast.makeText(this@Detail, "Tidak ada data!", Toast.LENGTH_SHORT).show()
+                } else {
+                    val array = objek.getJSONArray("data")
+                    for (i in 0 until array.length()) {
+                        val data = array.getJSONObject(i)
+                        val cue = data.getString("judul");
+                        txt_judul.text = data.getString("judul")
+                        txt_content.text = data.getString("description")
+                        Glide.with(this@Detail)
+                            .load(Config.url_gambar + data.getString("gambar")).into(img_content)
+                        video_content.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.data = Uri.parse(cue)
+                            startActivity(intent)
+                        }
+                    }
 
+                }
+            } catch (e:Exception){
+                e.printStackTrace()
             }
         }
 

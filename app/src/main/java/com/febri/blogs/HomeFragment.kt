@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
+            try {
             pd?.dismiss()
             val objek= JSONObject(result)
             if (objek.getInt("status")==1){
@@ -67,6 +68,9 @@ class HomeFragment : Fragment() {
                     rc.layoutManager = LinearLayoutManager(activity)
                     rc.adapter = adapter
                 }
+            }
+            } catch (e:Exception){
+                e.printStackTrace()
             }
         }
     }
