@@ -16,6 +16,8 @@
         </activity>
         <activity android:name=".ContentList">
         </activity>
+        <activity android:name=".Detail">
+        </activity>
         <activity android:name=".Register">
         </activity>
         <activity
