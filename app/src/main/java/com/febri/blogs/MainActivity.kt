@@ -74,20 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 ft.replace(R.id.container, HomeFragment()).commit()
             }
             R.id.nav_gallery -> {
-
+                finish()
             }
-            R.id.nav_slideshow -> {
 
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
