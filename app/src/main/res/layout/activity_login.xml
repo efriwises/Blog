@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="60dp"
-                android:text="@string/login_dummy"
+                android:text="LOGIN"
                 android:textAllCaps="true"
                 android:textSize="30sp" />
 

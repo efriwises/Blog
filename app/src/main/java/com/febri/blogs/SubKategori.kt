@@ -29,7 +29,6 @@ class SubKategori : AppCompatActivity() {
 
         id=intent.getStringExtra(Config.id)
 
-//        Toast.makeText(this, id.toString(), Toast.LENGTH_SHORT).show()
 
         data = hashMapOf()
 
